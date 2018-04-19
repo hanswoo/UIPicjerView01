@@ -8,12 +8,41 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDelegate,
+UIPickerViewDataSource{
+    
 
+    @IBOutlet weak var myLabel: UILabel!
+    @IBOutlet weak var mypic: UIPickerView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        //ViewController delegate 연결
+        mypic.delegate = self
+        mypic.dataSource = self
     }
+    //UIPickerViewDataSource method
+    func numberOfComponents(in pickerView: UIPickerView) -> Int{
+        return 2
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+        if component == 0 {
+            return 10
+        }else {
+            return 50
+        }
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
+        if component == 0{
+            return "1st component \(row)"
+        }else{
+            return "2nd component \(row)"
+        }
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        myLabel.text = "comp = \(component) row = \(row)"
+        
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
